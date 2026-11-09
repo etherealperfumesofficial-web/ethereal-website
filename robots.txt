@@ -3,4 +3,4 @@ Allow: /
 Disallow: /thank-you/
 Disallow: /thank-you
 
-Sitemap: https://YOURDOMAIN.com/sitemap.xml
+Sitemap: https://etherealperfumes.co.in/sitemap.xml
