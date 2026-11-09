@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#dfbe76" />
+      <stop offset="50%" stop-color="#c9a24d" />
+      <stop offset="100%" stop-color="#9a7732" />
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#0d0a0a" />
+  <!-- Elegant crescent moon & star symbol -->
+  <path d="M 38 14 A 18 18 0 1 0 50 38 A 15 15 0 1 1 38 14 Z" fill="url(#goldGrad)" />
+  <circle cx="39" cy="22" r="2.5" fill="url(#goldGrad)" />
+  <path d="M 46 16 L 47 19 L 50 20 L 47 21 L 46 24 L 45 21 L 42 20 L 45 19 Z" fill="#dfbe76" />
+</svg>
