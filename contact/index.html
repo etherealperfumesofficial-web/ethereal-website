@@ -94,7 +94,7 @@
     <section class="page-header">
       <div class="container reveal-on-scroll">
         <span class="eyebrow">Direct Dialogue</span>
-        <h1 class="page-header-title">Atelier Consultation & Enquiries</h1>
+        <h1 class="page-header-title">Order or Enquire</h1>
         <p class="page-header-subtitle">
           We welcome conversations about our formulations, custom maceration reservations, and corporate or wedding gifting.
         </p>
@@ -221,13 +221,33 @@
                 <label for="contact-perfume" class="form-label">Perfume of Interest <span class="req">*</span></label>
                 <select id="contact-perfume" name="perfume" class="form-control" required>
                   <option value="">Please choose an option...</option>
-                  <option value="Aurora Musk (Amber, Oud, Saffron)">Aurora Musk — Amber, Cambodian Oud, Saffron (50ml)</option>
-                  <option value="Celestia (White Floral, Jasmine)">Celestia — White Floral, Sambac Jasmine (50ml)</option>
-                  <option value="Lunar Bloom (Damascena Rose, Sandalwood)">Lunar Bloom — Dark Rose, Mysore Sandalwood (50ml)</option>
-                  <option value="Velvet Cloud (Bourbon Vanilla, Cashmere)">Velvet Cloud — Smoked Bourbon Vanilla, Cedar (50ml)</option>
+                  <option value="Aurora Musk (Amber, Oud, Saffron)">Aurora Musk — Amber, Cambodian Oud, Saffron</option>
+                  <option value="Celestia (White Floral, Jasmine)">Celestia — White Floral, Sambac Jasmine</option>
+                  <option value="Lunar Bloom (Damascena Rose, Sandalwood)">Lunar Bloom — Dark Rose, Mysore Sandalwood</option>
+                  <option value="Velvet Cloud (Bourbon Vanilla, Cashmere)">Velvet Cloud — Smoked Bourbon Vanilla, Cedar</option>
                   <option value="Gift set / Not sure">Gift set / Not sure (Personal Guidance Requested)</option>
                 </select>
                 <span class="form-error"></span>
+              </div>
+
+              <!-- Flacon Size & Quantity Selection -->
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem;">
+                <div class="form-group">
+                  <label for="contact-size" class="form-label">Flacon Size <span class="req">*</span></label>
+                  <select id="contact-size" name="size" class="form-control" required>
+                    <option value="50ml" selected>50ml</option>
+                    <option value="30ml">30ml</option>
+                    <option value="100ml">100ml</option>
+                    <option value="Not sure">Not sure</option>
+                  </select>
+                  <span class="form-error"></span>
+                </div>
+
+                <div class="form-group">
+                  <label for="contact-quantity" class="form-label">Quantity <span class="req">*</span></label>
+                  <input type="number" id="contact-quantity" name="quantity" class="form-control" value="1" min="1" max="10" required>
+                  <span class="form-error"></span>
+                </div>
               </div>
 
               <!-- Message -->
@@ -277,10 +297,10 @@
         <div>
           <h4 class="footer-col-title">The Creations</h4>
           <ul class="footer-links-list">
-            <li><a href="/products/aurora-musk/" class="footer-link">Aurora Musk (50ml)</a></li>
-            <li><a href="/products/celestia/" class="footer-link">Celestia (50ml)</a></li>
-            <li><a href="/products/lunar-bloom/" class="footer-link">Lunar Bloom (50ml)</a></li>
-            <li><a href="/products/velvet-cloud/" class="footer-link">Velvet Cloud (50ml)</a></li>
+            <li><a href="/products/aurora-musk/" class="footer-link">Aurora Musk</a></li>
+            <li><a href="/products/celestia/" class="footer-link">Celestia</a></li>
+            <li><a href="/products/lunar-bloom/" class="footer-link">Lunar Bloom</a></li>
+            <li><a href="/products/velvet-cloud/" class="footer-link">Velvet Cloud</a></li>
             <li><a href="/products/" class="footer-link">Full Catalog &rarr;</a></li>
           </ul>
         </div>
