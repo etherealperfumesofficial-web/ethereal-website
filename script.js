@@ -10,6 +10,34 @@
   const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit';
   const WEB3FORMS_ACCESS_KEY = 'dd38788d-08e6-4d7c-9d96-13631d5d9539';
 
+  // Single data object for product sizes and prices (INR)
+  const PRODUCT_PRICES = {
+    'aurora-musk': {
+      name: 'Aurora Musk',
+      '30ml': '₹2,799',
+      '50ml': '₹4,499',
+      '100ml': '₹7,499'
+    },
+    'celestia': {
+      name: 'Celestia',
+      '30ml': '₹2,199',
+      '50ml': '₹3,499',
+      '100ml': '₹5,799'
+    },
+    'lunar-bloom': {
+      name: 'Lunar Bloom',
+      '30ml': '₹2,399',
+      '50ml': '₹3,799',
+      '100ml': '₹6,299'
+    },
+    'velvet-cloud': {
+      name: 'Velvet Cloud',
+      '30ml': '₹2,599',
+      '50ml': '₹3,999',
+      '100ml': '₹6,699'
+    }
+  };
+
   /* --------------------------------------------------------------------------
      1. DOM Ready Initialization
      -------------------------------------------------------------------------- */
@@ -18,6 +46,7 @@
     initMobileNav();
     initScrollReveal();
     initActiveNavLinks();
+    initProductSizeSelector();
     initEnquiryForms();
     handleQueryPrefill();
   });
@@ -122,31 +151,97 @@
   }
 
   /* --------------------------------------------------------------------------
-     6. Prefill Perfume from Query Param (e.g. ?perfume=aurora-musk)
+     6. Prefill Perfume and Size from Query Params (e.g. ?product=aurora-musk&size=50ml)
      -------------------------------------------------------------------------- */
   function handleQueryPrefill() {
     try {
       const params = new URLSearchParams(window.location.search);
-      const perfumeSlug = params.get('perfume');
-      if (!perfumeSlug) return;
+      const productSlug = params.get('product') || params.get('perfume');
+      const sizeParam = params.get('size');
 
-      const perfumeSelects = document.querySelectorAll('select[name="perfume"]');
-      perfumeSelects.forEach(select => {
-        const option = Array.from(select.options).find(opt => 
-          opt.value.toLowerCase().includes(perfumeSlug.toLowerCase()) ||
-          opt.text.toLowerCase().includes(perfumeSlug.replace('-', ' ').toLowerCase())
-        );
-        if (option) {
-          select.value = option.value;
-        }
-      });
+      if (productSlug) {
+        const perfumeSelects = document.querySelectorAll('select[name="perfume"]');
+        perfumeSelects.forEach(select => {
+          const option = Array.from(select.options).find(opt => 
+            opt.value.toLowerCase().includes(productSlug.toLowerCase()) ||
+            opt.text.toLowerCase().includes(productSlug.replace(/-/g, ' ').toLowerCase())
+          );
+          if (option) {
+            select.value = option.value;
+          }
+        });
+      }
+
+      if (sizeParam) {
+        const sizeSelects = document.querySelectorAll('select[name="size"]');
+        sizeSelects.forEach(select => {
+          const option = Array.from(select.options).find(opt => 
+            opt.value.toLowerCase() === sizeParam.toLowerCase() ||
+            opt.text.toLowerCase() === sizeParam.toLowerCase()
+          );
+          if (option) {
+            select.value = option.value;
+          }
+        });
+      }
     } catch (e) {
       // Non-fatal query parsing
     }
   }
 
   /* --------------------------------------------------------------------------
-     7. Form Validation & Web3Forms AJAX Submission
+     7. Interactive Product Size Selector (Product Detail Pages)
+     -------------------------------------------------------------------------- */
+  function initProductSizeSelector() {
+    const sizeSelectors = document.querySelectorAll('[data-size-selector]');
+    if (!sizeSelectors.length) return;
+
+    sizeSelectors.forEach(selector => {
+      const productSlug = selector.getAttribute('data-product-slug');
+      if (!productSlug || !PRODUCT_PRICES[productSlug]) return;
+
+      const priceEl = document.querySelector('[data-product-price]');
+      const orderBtn = document.querySelector('[data-order-button]');
+      const pills = selector.querySelectorAll('[data-size]');
+
+      const setSize = (size) => {
+        pills.forEach(pill => {
+          const isMatch = pill.getAttribute('data-size') === size;
+          pill.classList.toggle('is-selected', isMatch);
+          pill.setAttribute('aria-pressed', isMatch ? 'true' : 'false');
+        });
+
+        // Update price display instantly
+        if (priceEl && PRODUCT_PRICES[productSlug][size]) {
+          priceEl.textContent = PRODUCT_PRICES[productSlug][size];
+        }
+
+        // Update Order button href
+        if (orderBtn) {
+          orderBtn.setAttribute('href', `/contact/?product=${productSlug}&size=${encodeURIComponent(size)}`);
+        }
+      };
+
+      pills.forEach(pill => {
+        pill.addEventListener('click', () => {
+          const size = pill.getAttribute('data-size');
+          if (size) setSize(size);
+        });
+      });
+
+      // Check query param size first, otherwise default to 50ml
+      const params = new URLSearchParams(window.location.search);
+      const urlSize = params.get('size');
+      if (urlSize && PRODUCT_PRICES[productSlug][urlSize]) {
+        setSize(urlSize);
+      } else {
+        setSize('50ml');
+      }
+    });
+  }
+
+  /* --------------------------------------------------------------------------
+     8. Form Validation & Web3Forms AJAX Submission
      -------------------------------------------------------------------------- */
   function initEnquiryForms() {
     const forms = document.querySelectorAll('form[data-ethereal-form], form#contact-enquiry-form, form#home-enquiry-form');
@@ -201,7 +296,7 @@
       }
 
       // Subject line and sender label for email notification
-      jsonObject.subject = `New Fragrance Consultation Enquiry - ${jsonObject.perfume || 'Bespoke Request'}`;
+      jsonObject.subject = 'New Ethereal Order/Enquiry';
       jsonObject.from_name = 'Ethereal Fragrance Atelier';
 
       console.log('[Ethereal Form] Submitting payload to Web3Forms:', {
@@ -318,6 +413,26 @@
       const val = perfumeSelect.value;
       if (!val || val === '') {
         setError(perfumeSelect, 'Please select a fragrance or consultation option.');
+        valid = false;
+      }
+    }
+
+    // Size Select
+    const sizeSelect = form.querySelector('select[name="size"]');
+    if (sizeSelect) {
+      const val = sizeSelect.value;
+      if (!val || val === '') {
+        setError(sizeSelect, 'Please select a bottle size.');
+        valid = false;
+      }
+    }
+
+    // Quantity Input
+    const quantityInput = form.querySelector('input[name="quantity"]');
+    if (quantityInput) {
+      const val = parseInt(quantityInput.value, 10);
+      if (isNaN(val) || val < 1 || val > 10) {
+        setError(quantityInput, 'Please specify a quantity between 1 and 10.');
         valid = false;
       }
     }

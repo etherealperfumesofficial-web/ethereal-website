@@ -1020,6 +1020,107 @@ h4 {
   margin-top: 0.5rem;
 }
 
+/* Product Price Box & Size Selector */
+.product-price-box {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.product-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.product-price {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 3.5vw, 2.6rem);
+  font-weight: 500;
+  color: var(--color-gold);
+  line-height: 1;
+}
+
+.product-tax-note {
+  font-size: 0.82rem;
+  color: var(--color-ivory-muted);
+  letter-spacing: 0.04em;
+}
+
+.product-order-note {
+  font-size: 0.88rem;
+  color: var(--color-ivory-muted);
+  line-height: 1.6;
+  margin-top: 0.65rem;
+}
+
+.product-size-selector {
+  margin-top: 1.35rem;
+}
+
+.size-selector-label {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--color-ivory-muted);
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.size-pills {
+  display: inline-flex;
+  gap: 0.65rem;
+  background-color: rgba(20, 15, 16, 0.6);
+  padding: 4px;
+  border-radius: 999px;
+  border: 1px solid var(--color-border-subtle);
+}
+
+.size-pill {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--color-ivory);
+  padding: 0.55rem 1.25rem;
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.size-pill:hover {
+  color: var(--color-gold-light);
+  border-color: var(--color-gold-border);
+  background-color: rgba(201, 162, 77, 0.08);
+}
+
+.size-pill.is-selected {
+  background-color: var(--color-gold);
+  color: var(--color-black);
+  border-color: var(--color-gold);
+  font-weight: 600;
+  box-shadow: 0 2px 12px rgba(201, 162, 77, 0.3);
+}
+
+.size-pill:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+/* Product Card Price */
+.product-card-price {
+  font-size: 0.95rem;
+  color: var(--color-gold);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  margin-top: 0.35rem;
+  margin-bottom: 0.85rem;
+}
+
 /* Olfactory Pyramid Component */
 .olfactory-pyramid {
   background-color: var(--color-black-card);
